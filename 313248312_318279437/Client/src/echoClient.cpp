@@ -49,9 +49,12 @@ void keyBoardInput(ConnectionHandler *connectionHandler) {
         if (!connectionHandler->sendBytes(cont, lenbytes))
         {
             cout << "Disconnected. Exiting...\n" << endl;
+            delete cont;
             break;
         }
+        delete cont;
     }
+    delete connectionHandler;
 };
 
 
@@ -94,7 +97,8 @@ int main (int argc, char *argv[])
 		// we filled up to the \n char - we must make sure now that a 0 char is also present. So we truncate last character.
     }
     keyBoardInputThread.detach();
-    connectionHandler->close();
+    delete connectionHandler;  // closes the socket connection as well
     cout << "Exiting...\n" << endl;
     return 0;
 }
+
