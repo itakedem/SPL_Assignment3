@@ -72,7 +72,7 @@ public class Course
 
 }
 
-class SortByIndex implements Comparator<Course>
+class SortByIndex implements Comparator<bgu.spl.net.srv.Course>
 {
-    public int compare(Course a, Course b) { return a.getIndex() - b.getIndex(); }
+    public int compare(bgu.spl.net.srv.Course a, bgu.spl.net.srv.Course b) { return a.getIndex() - b.getIndex(); }
 }

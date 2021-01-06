@@ -5,7 +5,6 @@ import bgu.spl.net.api.MessageCommand;
 import bgu.spl.net.impl.communication.Message;
 import bgu.spl.net.srv.Database;
 
-import java.io.Serializable;
 
 public class LogoutCommand implements MessageCommand
 {

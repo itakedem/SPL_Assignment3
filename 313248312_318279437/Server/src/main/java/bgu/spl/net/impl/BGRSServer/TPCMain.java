@@ -5,7 +5,6 @@ import bgu.spl.net.impl.communication.Message;
 import bgu.spl.net.impl.communication.Protocol;
 import bgu.spl.net.srv.BaseServer;
 import bgu.spl.net.srv.Database;
-import bgu.spl.net.srv.Reactor;
 
 public class TPCMain
 {
@@ -13,7 +12,7 @@ public class TPCMain
     {
         int port = Integer.parseInt(args[0]);
         BaseServer<Message> tpc = BaseServer.TPC(port,()->new Protocol(),()->new EncoderDecoder());
-        if (!Database.getInstance().initialize("src/main/Courses.txt"))
+        if (!Database.getInstance().initialize("./Courses.txt"))
         {
             System.out.println("Unable to read data from file");
             return;

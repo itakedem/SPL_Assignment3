@@ -69,4 +69,17 @@ public class Message implements Serializable {
 
     public void setPassword(String pass) {this.password = pass;}
     public String getOutput() {return output;}
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "op_code=" + op_code +
+                ", message_op_code=" + message_op_code +
+                ", user_name='" + user_name + '\'' +
+                ", password='" + password + '\'' +
+                ", course_num=" + course_num +
+                ", student_user_name='" + student_user_name + '\'' +
+                ", output='" + output + '\'' +
+                '}';
+    }
 }

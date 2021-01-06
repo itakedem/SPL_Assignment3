@@ -1,12 +1,9 @@
 package bgu.spl.net.srv;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,7 +32,7 @@ public class Database
     /**
      * Retrieves the single instance of this class.
      */
-    public static Database getInstance() {
+    public static bgu.spl.net.srv.Database getInstance() {
         return DatabaseHolder.instance;
     }
 
@@ -78,7 +75,7 @@ public class Database
         return kdams;
     }
 
-    public boolean register(String name, String pass, boolean isAdmin) {
+    public synchronized boolean register(String name, String pass, boolean isAdmin) {
         if (users.containsKey(name))
             return false;
         User user = new User(name, pass, isAdmin);
@@ -99,15 +96,13 @@ public class Database
         return users.get(user).logIn(pass);
     }
 
-    public boolean logOut(String user) {
-        return users.get(user).logOut();
-    }
+    public boolean logOut(String user) { return users.get(user).logOut(); }
 
-    public boolean signCourse(int num, String username)
+    public synchronized boolean signCourse(int num, String username)
     {
         User user = users.get(username);
         Course course = courses.get(num);
-        if (course == null || course.isFull() | user.isAdmin())
+        if (course == null || (course.isFull() | isSignedCourse(username,num) != 0))
             return false;
         LinkedList<Integer> kdam = course.getKdamCourse();
         for (Integer curr : kdam)                              //checks if the user is registered to all kdams
@@ -120,7 +115,8 @@ public class Database
         return true;
     }
 
-    public boolean unSignCourse(String name, int num) {
+    public boolean unSignCourse(String name, int num)
+    {
         User user = users.get(name);
         Course course = courses.get(num);
         if (course == null || user.isAdmin() || user.isSigned(course)==0)
@@ -131,26 +127,23 @@ public class Database
 
     public LinkedList<Integer> kdamCheck(int num) { return getCourse(num).getKdamCourse(); }
 
-    public Course getCourse(int num) {
-        return courses.get(num);
-    }         //for course stats
+    //for course stats
+    public Course getCourse(int num) { return courses.get(num); }
 
-    public User getUser(String name) {
-        return users.get(name);
-    }          //for user stats
+    //for user stats
+    public User getUser(String name) { return users.get(name); }
 
 
     //0 = not signed, 1 = signed, 2 = admin (not allowed)
-    public int isSignedCourse(String name, int num) {
+    public int isSignedCourse(String name, int num)
+    {
         User user = users.get(name);
         if(user.isAdmin())
             return 2;
         return user.isSigned(courses.get(num));
     }
 
-    private static class DatabaseHolder {
-        private static Database instance = new Database();
-    }
+    private static class DatabaseHolder { private static bgu.spl.net.srv.Database instance = new bgu.spl.net.srv.Database();}
 
     public String CourseStat(String user_name, int courseNum)
     {
@@ -159,8 +152,8 @@ public class Database
         if ((user == null | course == null) || !user.isAdmin())
             return null;
         String output = "Course: (" + courseNum + ") " + course.getName() + "\n";
-        output += "Seats Available: " + course.getEnrolled() + "/" + course.getCapacity() + "\n";
-        output += "Students Registered: " + course.getUsers().toString();
+        output += "Seats Available: " + (course.getCapacity()-course.getEnrolled()) + "/" + course.getCapacity() + "\n";
+        output += "Students Registered: " + course.getUsers().toString().replaceAll(" ", "");
         return output;
     }
 

@@ -60,12 +60,12 @@ public abstract class BaseServer<T> implements Server<T> {
 
     protected abstract void execute(BlockingConnectionHandler<T> handler);
 
-public static <T> BaseServer<T> TPC(
+public static <T> bgu.spl.net.srv.BaseServer<T> TPC(
         int port,
         Supplier<MessagingProtocol<T>> protocolFactory,
         Supplier<MessageEncoderDecoder<T>> encoderDecoderFactory)
 {
-    return new BaseServer<T>(port,protocolFactory,encoderDecoderFactory)
+    return new bgu.spl.net.srv.BaseServer<T>(port,protocolFactory,encoderDecoderFactory)
     {
         @Override
         protected void execute(BlockingConnectionHandler<T> handler) { new Thread(handler).start(); }

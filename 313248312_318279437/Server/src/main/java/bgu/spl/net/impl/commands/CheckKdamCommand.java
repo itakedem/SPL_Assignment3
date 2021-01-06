@@ -17,9 +17,6 @@ public class CheckKdamCommand implements MessageCommand
         if (user_name == null || db.getCourse(m.getCourse_num()) == null || db.getUser(user_name).isAdmin())
             return new Message(13, 6, "");
         LinkedList<Integer> kdam = db.kdamCheck(m.getCourse_num());
-        if (kdam.isEmpty())
-            return new Message(12, 6, "");
-
         return new Message(12, 6, kdam.toString());
     }
 }

@@ -18,7 +18,7 @@ public class EncoderDecoder implements MessageEncoderDecoder<Message>
     {
         pushByte(nextByte);
         if(len == 2)
-            opCode = bytesToShort(bytes,0);
+            opCode = bytesToShort(bytes, 0);
         if((opCode != null) && (len > 2 | opCode == 11 | opCode == 4))
         {
             if(opCode < 4)
@@ -41,7 +41,9 @@ public class EncoderDecoder implements MessageEncoderDecoder<Message>
         opCode = null;
         len = 0;
         Message out = m;
+        System.out.println(out.toString());
         m = null;
+
         return out;
     }
 
@@ -98,7 +100,6 @@ public class EncoderDecoder implements MessageEncoderDecoder<Message>
         bytes = combiner(bytes,message.getOutput().getBytes(StandardCharsets.UTF_8));
         byte[] b = {'\0'};
         return combiner(bytes,b);
-
     }
 
     public byte[] shortToBytes(short num)

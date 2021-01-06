@@ -20,17 +20,16 @@ void keyBoardParser::init()
     mapOpCode["MYCOURSES"] = 11;
 }
 
-char*  keyBoardParser::parse(string input)
+char*  keyBoardParser::parse(string input, int len)
 {
     string opCodeStr = input.substr(0,input.find(' '));
     int pos = input.find(' ');
     string content = "";
     if (pos <= input.size())
         content = input.substr(input.find(' ')+1);
-    char* bytes = new char[2+content.size()];
+    char* bytes = new char[len];
     short opCode = mapOpCode[opCodeStr];
     shortToBytes(opCode,bytes,0);
-
     if (opCode < 4)
         logRegParser(bytes,content);
     else if (opCode == 8)
@@ -49,8 +48,11 @@ void keyBoardParser::logRegParser(char* bytes, string cont)
     int pos = name.size()+2;
     bytes[pos] = '\0';
     pos+=1;
-    for(int i = 0; i<pass.size(); i++)
+    for(int i = 0; i<pass.size(); i++){
         bytes[i+pos] = pass[i];
+    }
+    bytes[pos+pass.size()]='\0';
+
 }
 
 void keyBoardParser::FBParser(char* bytes, string cont)
@@ -63,6 +65,7 @@ void keyBoardParser::statParser(char* bytes, string cont)
 {
     for(int i = 0; i<cont.size(); i++)
         bytes[i+2] = cont[i];
+    bytes[cont.size()+2] = '\0';
 }
 
 

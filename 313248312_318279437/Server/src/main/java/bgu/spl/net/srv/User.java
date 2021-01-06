@@ -1,19 +1,20 @@
 package bgu.spl.net.srv;
 
 import java.util.LinkedList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class User {
     private String userName;
     private String password;
     private boolean isAdmin;
-    private boolean isLogged;
+    private AtomicBoolean isLogged;
     private LinkedList<Course> courses;
 
     public User(String name, String pass, boolean isAdmin) {
         userName = name;
         password = pass;
         this.isAdmin = isAdmin;
-        isLogged = false;
+        isLogged = new AtomicBoolean(false);
         this.courses = new LinkedList<>();
     }
 
@@ -26,7 +27,7 @@ public class User {
     }
 
     public boolean isLogged() {
-        return isLogged;
+        return isLogged.get();
     }
 
     public boolean isAdmin() {
@@ -46,16 +47,16 @@ public class User {
     }
 
     public boolean logIn(String password) {
-        if (!this.password.equals(password) | isLogged)
+        if (!this.password.equals(password) | isLogged.get())
             return false;
-        isLogged = true;
+        isLogged.set(true);
         return true;
     }
 
     public boolean logOut() {
-        if (!isLogged)
+        if (!isLogged.get())
             return false;
-        isLogged = false;
+        isLogged.set(false);
         return true;
     }
 

@@ -10,13 +10,13 @@
 
 using namespace std;
 
-static class keyBoardParser{
+class keyBoardParser{
 private:
     map<string, short> mapOpCode;
 
 public:
     void init();
-    char * parse(string input);
+    char * parse(string input ,int len);
 
     void FBParser(char *bytes, string basicString);
 
