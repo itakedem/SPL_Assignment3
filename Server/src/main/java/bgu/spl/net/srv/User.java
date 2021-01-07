@@ -46,7 +46,7 @@ public class User {
         return 0;
     }
 
-    public boolean logIn(String password) {
+    public synchronized boolean logIn(String password) {
         if (!this.password.equals(password) | isLogged.get())
             return false;
         isLogged.set(true);

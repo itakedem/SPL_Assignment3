@@ -23,13 +23,13 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Database
 {
     private HashMap<Integer, Course> courses;
-    private ConcurrentHashMap<String, User> users;
+    private HashMap<String, User> users;
 
     //to prevent user from creating new Database
     private Database()
     {
         courses = new HashMap<>();
-        users = new ConcurrentHashMap<>();
+        users = new HashMap<>();
     }
 
     /**
