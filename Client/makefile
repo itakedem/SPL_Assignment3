@@ -3,14 +3,14 @@ LDFLAGS:=-lboost_system -lboost_thread -pthread
 
 all: BGRSclient
 
-BGRSclient: bin/echoClient.o bin/Decoder.o bin/keyBoardParser.o bin/connectionHandler.o
+BGRSclient: bin/Client.o bin/Decoder.o bin/keyBoardParser.o bin/connectionHandler.o
 	@echo 'Building target: BGRSclient'
-	g++ -o bin/BGRSclient bin/echoClient.o bin/Decoder.o bin/keyBoardParser.o bin/connectionHandler.o
+	g++ -o bin/BGRSclient bin/Client.o bin/Decoder.o bin/keyBoardParser.o bin/connectionHandler.o
 	@echo 'Finished building target: BGRSclient'
 	@echo ' '
 
-bin/echoClient.o: src/echoClient.cpp
-	g++ -g -Wall -Weffc++ -std=c++11 -c -Iinclude -o bin/echoClient.o src/echoClient.cpp
+bin/Client.o: src/Client.cpp
+	g++ -g -Wall -Weffc++ -std=c++11 -c -Iinclude -o bin/Client.o src/Client.cpp
 
 bin/Decoder.o: src/Decoder.cpp
 	g++ -g -Wall -Weffc++ -std=c++11 -c -Iinclude -o bin/Decoder.o src/Decoder.cpp
