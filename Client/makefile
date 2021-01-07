@@ -5,7 +5,7 @@ all: BGRSclient
 
 BGRSclient: bin/Client.o bin/Decoder.o bin/keyBoardParser.o bin/connectionHandler.o
 	@echo 'Building target: BGRSclient'
-	g++ -o bin/BGRSclient bin/Client.o bin/Decoder.o bin/keyBoardParser.o bin/connectionHandler.o
+	g++ -o bin/BGRSclient bin/Client.o bin/Decoder.o bin/keyBoardParser.o bin/connectionHandler.o  $(LDFLAGS)
 	@echo 'Finished building target: BGRSclient'
 	@echo ' '
 
