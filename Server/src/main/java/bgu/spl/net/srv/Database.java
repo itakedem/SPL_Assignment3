@@ -35,7 +35,10 @@ public class Database
     /**
      * Retrieves the single instance of this class.
      */
-    public static Database getInstance() {
+    public static Database getInstance()
+    {
+        if (DatabaseHolder.instance == null)
+            DatabaseHolder.instance.initialize("./Courses.txt");
         return DatabaseHolder.instance;
     }
 
