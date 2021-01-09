@@ -13,12 +13,6 @@ public class ReactorMain
         int port = Integer.parseInt(args[0]);
         int threads = Integer.parseInt(args[1]);
         Reactor<Message> reactor = new Reactor<Message>(threads, port, ()->new Protocol(),()->new EncoderDecoder());
-        if (!Database.getInstance().initialize("./Courses.txt"))
-        {
-            System.out.println("Unable to read data from file");
-            return;
-        }
-
         reactor.serve();
     }
 
