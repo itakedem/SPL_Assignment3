@@ -12,12 +12,6 @@ public class TPCMain
     {
         int port = Integer.parseInt(args[0]);
         BaseServer<Message> tpc = BaseServer.TPC(port,()->new Protocol(),()->new EncoderDecoder());
-        if (!Database.getInstance().initialize("./Courses.txt"))
-        {
-            System.out.println("Unable to read data from file");
-            return;
-        }
-
         tpc.serve();
     }
 }
